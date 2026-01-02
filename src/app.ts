@@ -13,7 +13,7 @@ app.use (cors({
 }))
 app.use(express.json());
 app.all('/api/auth/*splat', toNodeHandler(auth));
-app.post('/posts',postRouter)
+app.use('/posts',postRouter)
 app.get("/", (req,res) => {
     res.json({
         message: "Hello World"
