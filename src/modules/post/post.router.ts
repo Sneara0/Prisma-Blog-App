@@ -1,17 +1,20 @@
-import express, { NextFunction, Request, Response } from "express";
-import { postController } from "./post.controller";
-
-import authMiddleware, { UserRole } from "../../middleware/auth";
+import express, { Router } from 'express';
+import { PostController } from './post.controller';
+import auth, { UserRole } from '../../middleware/auth';
 
 const router = express.Router();
 
+router.get(
+    "/",
+    PostController.getAllPost
+)
 
-
+router.get("/:id",PostController.getPostById)
 
 router.post(
-  "/",
-  authMiddleware(UserRole.USER),
-  postController.createPost
-);
+    "/",
+    auth(UserRole.USER),
+    PostController.createPost
+)
 
-export const postRouter = router;
+export const postRouter: Router = router;
