@@ -131,8 +131,34 @@ const total = await prisma.posts.count({
 }
 
 
-const getPostById= async ()=>{
-    console.log("get post by id")
+const getPostById= async (postId:string)=>{
+ return await prisma.$transaction(async(tx)=>{
+    
+    await tx.posts.update({
+    where:{
+        id:postId
+    },
+    data:{
+        views:{
+            increment:1
+        }
+    }
+
+
+  })
+
+
+
+
+
+   const postData= await tx.posts.findUnique({
+    where:{
+        id:postId
+    }
+   })
+
+   return postData
+})
 
 }
 
